@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//Components;
+import { Switch, Route } from "react-router-dom";
+
+//Pages
+import HomePage from "./Pages/HomePage/HomePage";
+import ShopPage from "./Pages/Shop/ShopPage";
+const HatsPage = () => {
+  return <div>This is Hats Page</div>;
+};
+
+export default class Directory extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      routes: [
+        {
+          _id: Math.random().toString(),
+          component: HomePage,
+          route: "/",
+          exact: true,
+        },
+        {
+          _id: Math.random().toString(),
+          component: ShopPage,
+          route: "/shop",
+          exact: true,
+        },
+        {
+          _id: Math.random().toString(),
+          component: HatsPage,
+          route: "/shop/hats",
+          exact: true,
+        },
+      ],
+    };
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Switch>
+          {this.state.routes.map(({ exact, _id, component, route }) => (
+            <Route exact={exact} key={_id} component={component} path={route} />
+          ))}
+        </Switch>
+      </div>
+    );
+  }
 }
-
-export default App;
