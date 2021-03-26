@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    .options{
+        padding: 20px;
+        .option{
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    } 
+}
+    
+        
+  
