@@ -12,6 +12,26 @@ const config = {
   measurementId: "G-MMQDV2NK6C",
 };
 
+
+export const createUserProfileDocument = async(userAuth, additionalData) =>{
+    if(!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+
+    const snapShot = await userRef.get();
+    if(!snapShot.exists){
+        const {displayName, email, photoURL} = userAuth;
+        const createdAt = new Date();
+        await userRef.set({
+            displayName,
+            email,
+            photoURL,
+            ...additionalData,
+        }).catch(err => alert(`Error Occured : ${err.message}`));
+    }
+    return userRef;
+}
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();

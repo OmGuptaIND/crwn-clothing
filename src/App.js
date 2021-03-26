@@ -4,7 +4,7 @@ import "./App.css";
 //Components;
 import { Switch, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import {auth} from './Firebase/firebase';
+import {auth, createUserProfileDocument} from './Firebase/firebase';
 
 //Pages
 import HomePage from "./Pages/HomePage/HomePage";
@@ -53,11 +53,9 @@ export default class Directory extends React.Component {
   unsubscribeFromAuth = null;
   componentDidMount(){
     
-    auth.onAuthStateChanged(user => {
+    auth.onAuthStateChanged(async user => {
       this.unsubscribeFromAuth = this.setState({...this.state, currentUser:user});
-
-      console.log(`Current user is >>> ${this.state.currentUser}`);
-      console.log(this.state.currentUser);
+      createUserProfileDocument(user);
     })
   }
 
