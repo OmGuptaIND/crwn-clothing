@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import "./SignInPage.scss";
+import "./SignInCard.scss";
 
 //Components;
 import FormInput from "../../components/FormInput/FormInput";
 import Button from "../../components/Button/Button";
-import { signInWithGoogle } from "../../Firebase/firebase.js";
+import { auth, signInWithGoogle } from "../../Firebase/firebase.js";
 
-export default class SignInPage extends Component {
+export default class SignInCard extends Component {
   constructor(props) {
     super(props);
 
@@ -16,18 +16,21 @@ export default class SignInPage extends Component {
     };
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-
-    this.setState({
-      email: "",
-      password: "",
-    });
+    const {email, password} = this.state;
+    await auth.signInWithEmailAndPassword(email, password)
+    .then(user => {
+        this.setState({
+            email: "",
+            password: "",
+          });
+    })
+    .catch(err => console.log(err));
   };
 
   handleChange = (e) => {
     const { name, value } = e.target;
-
     this.setState({ [name]: value });
   };
   render() {
@@ -44,6 +47,7 @@ export default class SignInPage extends Component {
             type="email"
             value={this.state.email}
             required
+            autoComplete="off"
           />
           <FormInput
             label="Password"
@@ -52,9 +56,10 @@ export default class SignInPage extends Component {
             type="password"
             value={this.state.password}
             required
+            autoComplete="off"
           />
           <div className="buttons">
-            <Button type="submit">Sign In</Button>
+            <Button type="submit" onClick = {this.handleSubmit} >Sign In</Button>
             <Button isGoogleSignIn onClick={signInWithGoogle} type="submit">
               Sign In Google
             </Button>
