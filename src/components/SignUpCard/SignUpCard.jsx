@@ -40,8 +40,6 @@ export default class SignUpCard extends Component {
           })
 
     }
-
-    
     this.setState({
       email: "",
       password: "",

@@ -9,8 +9,8 @@ export default function Collection({ title, items }) {
       <div className="preview">
         {items
           .filter((item, Idx) => Idx < 4)
-          .map(({id, ...otherProps}) => (
-            <CollectionCard key = {id} {...otherProps} />
+          .map((item) => (
+            <CollectionCard key = {item.id} item = {item} />
           ))}
       </div>
     </div>

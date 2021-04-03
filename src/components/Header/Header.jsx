@@ -1,12 +1,21 @@
 import React from "react";
 import "./Header.scss";
 
+//Redux;
+import {connect} from 'react-redux';
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+
 //Components;
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../images/logo.svg";
 import { auth } from "../../Firebase/firebase";
+import CartIcon from "../CartIcon/CartIcon.jsx";
+import CartDropdown from "../CartDropdown/CartDropdown";
 
-export default function Header({ currentUser }) {
+
+
+const Header = ({showcart, currentUser}) => {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -28,7 +37,16 @@ export default function Header({ currentUser }) {
             SIGNIN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {showcart && (<CartDropdown />)}
     </div>
   );
-}
+};
+
+const mapStateToProps = state => ({
+  showcart:selectCartHidden(state),
+  currentUser:selectCurrentUser(state)
+});
+
+export default connect(mapStateToProps)(Header);
