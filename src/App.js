@@ -16,10 +16,7 @@ import HomePage from "./Pages/HomePage/HomePage";
 import ShopPage from "./Pages/Shop/ShopPage";
 import AuthPage from "./Pages/AuthPage/AuthPage";
 import CheckOut from "./Pages/CheckOut/CheckOut";
-
-const HatsPage = () => {
-  return <div>This is Hats Page</div>;
-};
+import CollectionPage from "./Pages/CollectionPage/CollectionPage";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -57,7 +54,8 @@ class App extends React.Component {
           />
           <Route exact path="/shop" component={ShopPage} />
           <Route exact path="/checkout" component={CheckOut} />
-          <Route exact path="/shop/hats" component={HatsPage} />
+          <Route path="/shop/:categoryId" component={CollectionPage} />
+          <Route path = '*' render = {()=><div>Does not Exist</div>} />
         </Switch>
       </div>
     );
